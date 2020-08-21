@@ -214,20 +214,22 @@
     }
 
     class LaxElement {
+      id = ''
       domElement
       transformsData
       styles = {}
-      selector = ''
 
       groupIndex = 0
       laxInstance
 
-      constructor(selector, laxInstance, domElement, transformsData, groupIndex = 0, options = {}) {
-        this.selector = selector
+      constructor(laxInstance, domElement, transformsData, groupIndex = 0, options = {}) {
+        this.id = Date.now().toString(36) + Math.random().toString(36).slice(2)
         this.laxInstance = laxInstance
         this.domElement = domElement
         this.transformsData = transformsData
         this.groupIndex = groupIndex
+        
+        this.domElement.dataset.laxId = this.id;
 
         const { style = {} } = options
 
@@ -414,25 +416,35 @@
         if (!this.elements) {
           this.elements = []
         }
-
+        
         const elements = document.querySelectorAll("[data-lax]")
 
         elements.forEach((domElement) => {
           const transforms = Function(`return ${domElement.getAttribute('data-lax')}`)()
-          this.elements.push(new LaxElement('[data-lax]', this, domElement, transforms, 0, {}))
+          this.elements.push(new LaxElement(this, domElement, transforms, 0, {}))
         })
       }
 
-      addElements = (selector, transforms, options) => {
-        const domElements = document.querySelectorAll(selector)
+      processSelector = (selector) => {
+        return typeof selector === 'string'
+          ? document.querySelectorAll(`${selector}[data-lax-id]`)
+          : NodeList.prototype.isPrototypeOf(selector)
+          ? selector
+          : [selector];
+      }
 
-        domElements.forEach((domElement, i) => {
-          this.elements.push(new LaxElement(selector, this, domElement, transforms, i, options))
+      addElements = (selector, transforms, options) => {
+        this.processSelector(selector).forEach((domElement, i) => {
+          this.elements.push(new LaxElement(this, domElement, transforms, i, options))
         })
       }
 
       removeElements = (selector) => {
-        this.elements = this.elements.filter(element => element.selector !== selector)
+        const ids = Array.from(this.processSelector(selector))
+          .filter(e => e.dataset.laxId)
+          .map(element => element.dataset.laxId);
+
+        this.elements = this.elements.filter(element => !ids.includes(element.id))
       }
     }
 
