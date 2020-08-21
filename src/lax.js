@@ -188,11 +188,9 @@
       lastValue = 0
       frameStep = 1
       m1 = 0
-
       m2 = 0
       momentum = 0
       momentumEnabled = false
-
 
       constructor(name, getValueFn, options = {}) {
         this.name = name
@@ -231,7 +229,6 @@
       domElement
       transformsData
       styles = {}
-
       groupIndex = 0
       laxInstance
 
@@ -351,13 +348,10 @@
       drivers = []
       elements = []
       frame = 0
-
       debug = false
-
       windowWidth = 0
       windowHeight = 0
       presets = {}
-
       debugData = {
         frameLengths: []
       }
@@ -464,8 +458,9 @@
     return new Lax()
   })()
 
-  if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+  if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = laxInstance;
-  else
+  } else {
     window.lax = laxInstance;
+  }
 })()
