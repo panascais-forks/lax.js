@@ -411,7 +411,10 @@
       }
 
       findAndAddElements = () => {
-        this.elements = []
+        if (!this.elements) {
+          this.elements = []
+        }
+
         const elements = document.querySelectorAll("[data-lax]")
 
         elements.forEach((domElement) => {
