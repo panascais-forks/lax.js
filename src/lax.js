@@ -427,7 +427,7 @@
 
       processSelector = (selector) => {
         return typeof selector === 'string'
-          ? document.querySelectorAll(`${selector}[data-lax-id]`)
+          ? document.querySelectorAll(selector)
           : NodeList.prototype.isPrototypeOf(selector)
           ? selector
           : [selector];
