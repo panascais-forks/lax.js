@@ -136,6 +136,7 @@
     }
 
     function parseValue(val, { width, height, x, y }, index) {
+      let value = val;
       if (typeof val === 'number') {
         return val
       }
@@ -151,6 +152,18 @@
       const right = left + width
       const top = y + scrollTop
       const bottom = top + height
+      const units = {}
+
+      value.match(/((\d+\.+\d)|(\d))+(vw|vh)/g)?.map(el => {
+        const base = el.endsWith('vh') ? screenHeight : el.endsWith('vw') ? screenWidth : undefined
+        const value = el.replace('vh', '').replace('vw', '');
+
+        units[el] = base * (value / 100)
+      })
+
+      Object.keys(units).forEach(key => {
+        value = value.split(key).join(units[key])
+      })
 
       return Function(`return ${val
         .replace(/screenWidth/g, screenWidth)
