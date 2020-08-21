@@ -165,7 +165,7 @@
         value = value.split(key).join(units[key])
       })
 
-      return Function(`return ${val
+      return Function(`return ${value
         .replace(/screenWidth/g, screenWidth)
         .replace(/screenHeight/g, screenHeight)
         .replace(/pageHeight/g, pageHeight)
