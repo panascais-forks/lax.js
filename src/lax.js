@@ -432,7 +432,7 @@
       }
 
       removeElements = (selector) => {
-        this.elements.filter(element => element.selector !== selector)
+        this.elements = this.elements.filter(element => element.selector !== selector)
       }
     }
 
