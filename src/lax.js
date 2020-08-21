@@ -226,7 +226,7 @@
         this.id = Date.now().toString(36) + Math.random().toString(36).slice(2)
         this.laxInstance = laxInstance
         this.domElement = domElement
-        this.transformsData = transformsData
+        this.transformsData = typeof transformsData === 'function' ? transformsData(domElement, groupIndex) : transformsData
         this.groupIndex = groupIndex
         
         this.domElement.dataset.laxId = this.id;
