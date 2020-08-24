@@ -241,7 +241,7 @@
         
         this.domElement.dataset.laxId = this.id;
 
-        const { style = {} } = options
+        const { style = {} } = typeof options === 'function' ? options() : options;
 
         Object.keys(style).forEach(key => {
           domElement.style[key] = style[key]
