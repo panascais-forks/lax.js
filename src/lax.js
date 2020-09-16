@@ -4,7 +4,7 @@
     const filterKeys = ["blur", "hue-rotate", "brightness"]
     const translate3dKeys = ["translateX", "translateY", "translateZ"]
 
-    const pxUnits = ["perspective", "border-radius", "blur", "translateX", "translateY", "translateZ"]
+    const pxUnits = ["perspective", "border-radius", "blur", "translateX", "translateY", "translateZ", "height"]
     const degUnits = ["hue-rotate", "rotate", "rotateX", "rotateY", "skew", "skewX", "skewY"]
 
     function floatOrNull(v = "") {
